@@ -1,0 +1,44 @@
+<div class="sidebar">
+  <div class="server-management">
+    <div class="add-server" {{action 'addServer'}}>
+      <div class="rounded large">+</div>
+      <span>Add Server</span>
+    </div>
+    <div class="remove-server" {{action 'removeLastServer'}}>
+      <div class="rounded large">-</div>
+      <span>Destroy</span>
+    </div>
+  </div>
+
+  <div class="app-listing">
+    <div class="header">
+      Available Apps
+    </div>
+    {{#each app in apps}}
+      <div {{bind-attr class=":app app.id"}}>
+        {{app.name}}
+
+        <div class="buttons">
+          <div class="remove">
+            <div class="rounded" {{action 'removeLastApp' app}}>-</div>
+            <div {{bind-attr class=":rounded app.color"}} {{action 'addApp' app}}>+</div>
+          </div>
+        </div>
+      </div>
+    {{/each}}
+  </div>
+</div>
+<div class="server-canvas">
+  <h1>Server Canvas</h1>
+  {{#each server in servers}}
+    <div {{bind-attr class=":server server.inUse:active:inactive server.app.id"}}>
+      {{#if server.inUse}}
+        <div class="initials">{{server.app.abbreviation}}</div>
+        <div class="type">{{server.app.name}}</div>
+        <div class="add-time">{{server.added}}</div>
+      {{else}}
+        Unused
+      {{/if}}
+    </div>
+  {{/each}}
+</div>

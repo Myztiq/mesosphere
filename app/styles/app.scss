@@ -1,0 +1,79 @@
+body{
+  min-width: 600px;
+  color: white;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 300;
+}
+
+.sidebar{
+  z-index: 2;
+  height: 100%;
+  width: 30%;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  background-color: #1E1E1E;
+
+  .server-management{
+    text-align: center;
+    margin-top: 10px;
+    .add-server, .remove-server{
+      margin: 10px;
+      display: inline-block;
+      span{
+        display: block;
+        margin-top: 10px;
+      }
+    }
+  }
+  .app-listing{
+    margin-top: 80px;
+
+    .app{
+      position: relative;
+      background-color: rgba(19, 19, 19, .5);
+      padding: 10px 5px;
+      font-size: 12px;
+      margin-right: -15px;
+      margin-bottom: 1px;
+      .buttons{
+        float: right;
+      }
+    }
+
+  }
+}
+
+.server-canvas{
+  background-color: #131313;
+  position: absolute;
+  width: 70%;
+  left: 30%;
+  top: 0px;
+  height: 100%;
+  padding: 30px;
+  h1{
+    margin-top: 0px;
+    font-weight: 400;
+  }
+}
+
+.rounded{
+  border: 1px solid white;
+  border-radius: 100px;
+  display: inline-block;
+  text-align: center;
+  $size: 20px;
+  height: $size;
+  width: $size;
+  line-height: $size;
+  font-size: 20px;
+
+  &.large{
+    $size: 40px;
+    height: $size;
+    width: $size;
+    line-height: $size;
+    font-size: 30px;
+  }
+}
