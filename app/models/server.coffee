@@ -6,6 +6,7 @@ AppModel = DS.Model.extend
   appInstances: DS.hasMany('appInstance')
 
   inUse: Ember.computed.notEmpty 'appInstances'
+  isFull: Ember.computed.gte 'appInstances.length', 2
 
   appWatcher: (->
     if @get('app')?

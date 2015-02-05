@@ -1,10 +1,10 @@
 <div class="sidebar">
   <div class="server-management">
-    <div class="add-server" {{action 'addServer'}}>
+    <div class="add-server interactive" {{action 'addServer'}}>
       <div class="rounded large">+</div>
       <span>Add Server</span>
     </div>
-    <div class="remove-server" {{action 'removeLastServer'}}>
+    <div class="remove-server interactive" {{action 'removeLastServer'}}>
       <div class="rounded large">-</div>
       <span>Destroy</span>
     </div>
@@ -18,31 +18,31 @@
       <div {{bind-attr class=":app app.id"}}>
         {{app.name}}
         <div class="buttons">
-          <div class="remove">
-            <div class="rounded" {{action 'removeLastApp' app}}>-</div>
-            <div {{bind-attr class=":rounded app.color"}} {{action 'addApp' app}}>+</div>
-          </div>
+          <div class="remove rounded interactive" {{action 'removeLastInstance' app}}>-</div>
+          <div class="add interactive rounded" {{action 'addInstance' app}}>+</div>
         </div>
       </div>
     {{/each}}
   </div>
 </div>
 <div class="server-canvas">
-  <h1>Server Canvas</h1>
-  {{#unless servers.length}}
-    You have no servers! Add one.
-  {{/unless}}
-  {{#each server in servers}}
-    <div {{bind-attr class=":server server.inUse:active:inactive server.app.id"}}>
-      {{#if server.inUse}}
-        {{#each instance in server.appInstances}}
-          <div {{bind-attr class=":app app.id"}}>
-            <div class="initials">{{instance.app.abbreviation}}</div>
-            <div class="type">{{instance.app.name}}</div>
-            <div class="add-time">{{instance.started}}</div>
-          </div>
-        {{/each}}
-      {{/if}}
-    </div>
-  {{/each}}
+  <div class="inner-content">
+    <h1>Server Canvas</h1>
+    {{#unless servers.length}}
+      You have no servers! Add one.
+    {{/unless}}
+    {{#each server in servers}}
+      <div {{bind-attr class=":server server.inUse:active:inactive server.app.id server.isFull:isFull"}}>
+        {{#if server.inUse}}
+          {{#each instance in server.appInstances}}
+            <div {{bind-attr class=":instance instance.app.id instance.active:active"}} {{action 'removeInstance' instance}}>
+              <div class="initials">{{instance.app.abbreviation}}</div>
+              <div class="type">{{instance.app.name}}</div>
+              <div class="add-time">Added {{time-ago-in-words instance.appStarted}}</div>
+            </div>
+          {{/each}}
+        {{/if}}
+      </div>
+    {{/each}}
+  </div>
 </div>

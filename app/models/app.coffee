@@ -2,7 +2,6 @@
 
 AppModel = DS.Model.extend
   name: DS.attr('string')
-  color: DS.attr('string')
   instances: DS.hasMany('appInstance')
 
   abbreviation: (->
@@ -16,27 +15,22 @@ AppModel.reopenClass
     {
       id: 'hadoop'
       name: 'Hadoop'
-      color: '#C10DC8'
     }
     {
       id: 'rails'
       name: 'Rails'
-      color: '#2B2FF2'
     }
     {
       id: 'chronos'
       name: 'Chronos'
-      color: '#08BAFB'
     }
     {
       id: 'storm'
       name: 'Storm'
-      color: '#30E290'
     }
     {
       id: 'spark'
       name: 'Spark'
-      color: '#6AF410'
     }
   ]
 

@@ -6,6 +6,7 @@ AppInstance = DS.Model.extend
 
   app: DS.belongsTo('app')
   server: DS.belongsTo('server')
+  active: DS.attr('boolean')
 
   appWatcher: (->
     if @get('app')?
