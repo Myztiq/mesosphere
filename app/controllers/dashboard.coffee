@@ -24,7 +24,7 @@ DashboardController = Ember.Controller.extend
       instances = @get('createdSortedServers.lastObject.appInstances')
       @get('createdSortedServers.lastObject').destroyRecord()
       instances.forEach (instance)=>
-        @send 'addApp', instance.get('app')
+        @send 'addInstance', instance.get('app')
 
     addInstance: (app) ->
       server = @get('prioritizedServers.firstObject')
