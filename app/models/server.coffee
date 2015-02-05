@@ -3,10 +3,9 @@
 
 AppModel = DS.Model.extend
   created: DS.attr('string')
-  appStarted: DS.attr('string')
-  apps: DS.hasMany('app')
+  appInstances: DS.hasMany('appInstance')
 
-  inUse: Ember.computed.notEmpty 'apps'
+  inUse: Ember.computed.notEmpty 'appInstances'
 
   appWatcher: (->
     if @get('app')?
@@ -20,12 +19,18 @@ AppModel.reopenClass
     {
       id: 'server1'
       created: new Date()
-      app: null
     }
     {
       id: 'server2'
       created: new Date()
-      app: null
+    }
+    {
+      id: 'server3'
+      created: new Date()
+    }
+    {
+      id: 'server4'
+      created: new Date()
     }
   ]
 

@@ -3,7 +3,7 @@
 AppModel = DS.Model.extend
   name: DS.attr('string')
   color: DS.attr('string')
-  servers: DS.hasMany('server')
+  instances: DS.hasMany('appInstance')
 
   abbreviation: (->
     name = @get('name')

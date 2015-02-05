@@ -35,11 +35,11 @@
   {{#each server in servers}}
     <div {{bind-attr class=":server server.inUse:active:inactive server.app.id"}}>
       {{#if server.inUse}}
-        {{#each app in server.apps}}
+        {{#each instance in server.appInstances}}
           <div {{bind-attr class=":app app.id"}}>
-            <div class="initials">{{app.abbreviation}}</div>
-            <div class="type">{{app.name}}</div>
-            <div class="add-time">{{server.added}}</div>
+            <div class="initials">{{instance.app.abbreviation}}</div>
+            <div class="type">{{instance.app.name}}</div>
+            <div class="add-time">{{instance.started}}</div>
           </div>
         {{/each}}
       {{/if}}

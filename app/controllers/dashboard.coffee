@@ -3,36 +3,44 @@
 DashboardController = Ember.Controller.extend
   servers: []
 
+  createdSortedServers: Ember.computed.sort 'servers', (server1, server2)->
+    server1.get('created') - server2.get('created')
+
   availableServers: (->
-    @get('servers').filter (server)->
-      server.get('apps.length') < 2
-  ).property 'servers.@each.apps.length'
+    @get('createdSortedServers').filter (server)->
+      server.get('appInstances.length') < 2
+  ).property 'createdSortedServers.@each.appInstances.length'
 
   prioritizedServers: Ember.computed.sort 'availableServers', (server1, server2)->
-    server1.get('apps.length') - server2.get('apps.length')
+    server1.get('appInstances.length') - server2.get('appInstances.length')
 
   actions:
     addServer: ->
       @store.createRecord 'server',
         created: new Date()
+        apps: Ember.A()
 
     removeLastServer: ->
-      apps = @get('servers.lastObject.apps')
-      @get('servers.lastObject').destroyRecord()
-      apps.forEach (app)=>
-        @send 'addApp', app
+      instances = @get('createdSortedServers.lastObject.appInstances')
+      @get('createdSortedServers.lastObject').destroyRecord()
+      instances.forEach (instance)=>
+        @send 'addApp', instance.get('app')
 
     addApp: (app) ->
       server = @get('prioritizedServers.firstObject')
+      console.log server
       if server?
-        server.get('apps').pushObject app
+        @store.createRecord 'appInstance',
+          app: app
+          server: server
       else
         console.log 'No available servers to add this app to'
 
     removeLastApp: (app) ->
-      apps = app.get('servers').sortBy('appStarted').get('lastObject.apps')
-      if apps?
-        apps.removeAt apps.indexOf(app)
+      instance = app.get('instances').sortBy('started').get('lastObject')
+      if instance?
+
+        instance.destroyRecord()
       else
         console.log 'No app instances remaining'
 
