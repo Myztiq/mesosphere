@@ -17,7 +17,6 @@
     {{#each app in apps}}
       <div {{bind-attr class=":app app.id"}}>
         {{app.name}}
-
         <div class="buttons">
           <div class="remove">
             <div class="rounded" {{action 'removeLastApp' app}}>-</div>
@@ -30,14 +29,19 @@
 </div>
 <div class="server-canvas">
   <h1>Server Canvas</h1>
+  {{#unless servers.length}}
+    You have no servers! Add one.
+  {{/unless}}
   {{#each server in servers}}
     <div {{bind-attr class=":server server.inUse:active:inactive server.app.id"}}>
       {{#if server.inUse}}
-        <div class="initials">{{server.app.abbreviation}}</div>
-        <div class="type">{{server.app.name}}</div>
-        <div class="add-time">{{server.added}}</div>
-      {{else}}
-        Unused
+        {{#each app in server.apps}}
+          <div {{bind-attr class=":app app.id"}}>
+            <div class="initials">{{app.abbreviation}}</div>
+            <div class="type">{{app.name}}</div>
+            <div class="add-time">{{server.added}}</div>
+          </div>
+        {{/each}}
       {{/if}}
     </div>
   {{/each}}

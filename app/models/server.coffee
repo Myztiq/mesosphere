@@ -4,9 +4,9 @@
 AppModel = DS.Model.extend
   created: DS.attr('string')
   appStarted: DS.attr('string')
-  app: DS.belongsTo('app')
+  apps: DS.hasMany('app')
 
-  inUse: Ember.computed.notEmpty 'app'
+  inUse: Ember.computed.notEmpty 'apps'
 
   appWatcher: (->
     if @get('app')?

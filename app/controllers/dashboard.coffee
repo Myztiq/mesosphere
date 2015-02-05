@@ -3,7 +3,13 @@
 DashboardController = Ember.Controller.extend
   servers: []
 
-  emptyServers: Ember.computed.filterBy 'servers', 'inUse', false
+  availableServers: (->
+    @get('servers').filter (server)->
+      server.get('apps.length') < 2
+  ).property 'servers.@each.apps.length'
+
+  prioritizedServers: Ember.computed.sort 'availableServers', (server1, server2)->
+    server1.get('apps.length') - server2.get('apps.length')
 
   actions:
     addServer: ->
@@ -11,14 +17,23 @@ DashboardController = Ember.Controller.extend
         created: new Date()
 
     removeLastServer: ->
-      @get('servers.lastObject').destroy()
+      apps = @get('servers.lastObject.apps')
+      @get('servers.lastObject').destroyRecord()
+      apps.forEach (app)=>
+        @send 'addApp', app
 
     addApp: (app) ->
-      servers = @get('emptyServers')
-      server = servers.get('firstObject')
-      server?.set 'app', app
+      server = @get('prioritizedServers.firstObject')
+      if server?
+        server.get('apps').pushObject app
+      else
+        console.log 'No available servers to add this app to'
 
     removeLastApp: (app) ->
-      app.get('servers').sortBy('appStarted').get('lastObject')?.set('app', null)
+      apps = app.get('servers').sortBy('appStarted').get('lastObject.apps')
+      if apps?
+        apps.removeAt apps.indexOf(app)
+      else
+        console.log 'No app instances remaining'
 
 `export default DashboardController`

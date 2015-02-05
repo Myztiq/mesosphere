@@ -56,6 +56,17 @@ body{
     margin-top: 0px;
     font-weight: 400;
   }
+
+  .server{
+    width: 140px;
+    height: 100px;
+    margin: 5px;
+    float: left;
+    display: block;
+    &.inactive{
+      background-color: #1E1E1E;
+    }
+  }
 }
 
 .rounded{
